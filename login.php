@@ -58,5 +58,33 @@ $conn->close();
             <button type="submit">Entrar</button>
         </form>
     </div>
+    <script>
+    // Array de URLs das imagens de fundo
+    const imagens = [
+        'img/fundo1.jpg',
+        'img/fundo2.jpg', // Adicione suas imagens aqui
+        'img/fundo3.jpg',
+        'img/fundo4.jpg',
+        'img/fundo5.jpg',
+    ];
+
+    let imagemIndex = 0;
+
+    function mudarImagemFundo() {
+        // Atualiza o índice da imagem
+        imagemIndex = (imagemIndex + 1) % imagens.length;
+
+        // Seleciona o elemento body e altera o background-image
+        document.body.style.backgroundImage = `url('${imagens[imagemIndex]}')`;
+    }
+
+    // Troca de imagem a cada 5 segundos
+    setInterval(mudarImagemFundo, 5000);
+
+    // Garante que a primeira imagem seja carregada imediatamente
+    window.onload = function() {
+        document.body.style.backgroundImage = `url('${imagens[imagemIndex]}')`;
+    };
+</script>
 </body>
 </html>
