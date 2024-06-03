@@ -57,7 +57,8 @@ $dbname = "id22216941_barbearia2";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Verifica a conexão
-if ($conn->connect_error) {
+if ($conn->connect_error
+) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
@@ -75,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         echo "<div class='alert alert-danger' role='alert'>Horário já ocupado! Por favor, escolha outro horário.</div>";
-         echo '<a href="index.php" class="button-control"><i class="fas fa-arrow-left"></i> Voltar</a>';
+        echo '<a href="index.php" class="button-control"><i class="fas fa-arrow-left"></i> Voltar</a>';
     } else {
         $sql = "INSERT INTO agendamentos (nome, whatsapp, data, horario) VALUES ('$nome', '$whatsapp', '$data', '$horario')";
 
@@ -103,4 +104,3 @@ $conn->close();
 
 </body>
 </html>
-
