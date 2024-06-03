@@ -29,7 +29,7 @@ $result = $conn->query($sql);
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Painel do Administrador</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
@@ -120,5 +120,33 @@ $result = $conn->query($sql);
         
      <!-- Botão para a página de login do administrador -->
     </div>
+    <script>
+    // Array de URLs das imagens de fundo
+    const imagens = [
+        'img/fundo1.jpg',
+        'img/fundo2.jpg', 
+        'img/fundo3.jpg',
+        'img/fundo4.jpg',
+        'img/fundo5.jpg',
+    ];
+
+    let imagemIndex = 0;
+
+    function mudarImagemFundo() {
+        // Atualiza o índice da imagem
+        imagemIndex = (imagemIndex + 1) % imagens.length;
+
+        // Seleciona o elemento body e altera o background-image
+        document.body.style.backgroundImage = `url('${imagens[imagemIndex]}')`;
+    }
+
+    // Troca de imagem a cada 5 segundos
+    setInterval(mudarImagemFundo, 5000);
+
+    // Garante que a primeira imagem seja carregada imediatamente
+    window.onload = function() {
+        document.body.style.backgroundImage = `url('${imagens[imagemIndex]}')`;
+    };
+</script>
 </body>
 </html>
