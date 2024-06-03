@@ -15,16 +15,20 @@ require_once("conexao.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
+    
+
 </head>
 <body>
-    <a href="login.php" class="button-control"><i class="fas fa-cog"></i> ADM</a>
+
+    <a href="../login.php" class="button-control"><i class="fas fa-cog"></i> ADM</a>
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="col-md-6">
             <div class="text-center mb-4">
-                <img src="img/logoshadow.png" width="250px" style="pointer-events: none;">
+                <img src="img/logoshadow.png" width="250px" class="logoshadow">
             </div>
             <div class="card">
                 <div class="card-body">
+                    <h1>Agende seu corte</h1>
                     <form accept-charset="UTF-8" role="form" action="agendar.php" method="post">
                         <div class="form-group">
                             <label for="nome">Nome:</label>
@@ -36,7 +40,7 @@ require_once("conexao.php");
                         </div>
                         <div class="form-group">
                             <label for="data">Data:</label>
-                            <input type="date" id="data" name="data" class="form-control" required onchange="carregarHorariosDisponiveis()">
+                            <input type="date" id="data" name="data" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="horario">Horário:</label>
@@ -51,23 +55,50 @@ require_once("conexao.php");
         </div>
     </div>
 
+
     <script>
-        function carregarHorariosDisponiveis() {
-            const dataInput = document.getElementById('data').value;
-            if (!dataInput) return;
+    //script para carregar horarios
+        document.addEventListener('DOMContentLoaded', function() {
+            const dataInput = document.getElementById('data');
+            const horarioSelect = document.getElementById('horario');
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'horarios_disponiveis.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('horario').innerHTML = xhr.responseText;
-                }
-            };
-            xhr.send('data=' + encodeURIComponent(dataInput));
-        }
+            function carregarHorariosDisponiveis() {
+                const data = dataInput.value;
+                if (!data) return;
 
-        document.getElementById('data').setAttribute('min', new Date().toISOString().split('T')[0]);
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'horarios_disponiveis.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        horarioSelect.innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send('data=' + encodeURIComponent(data));
+            }
+
+            dataInput.addEventListener('change', carregarHorariosDisponiveis);
+            dataInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+
+//script para slides
+            const imagens = [
+                'img/fundo1.jpg',
+                'img/fundo2.jpg',
+                'img/fundo3.jpg',
+                'img/fundo4.jpg',
+                'img/fundo5.jpg',
+            ];
+
+            let imagemIndex = 0;
+
+            function mudarImagemFundo() {
+                imagemIndex = (imagemIndex + 1) % imagens.length;
+                document.body.style.backgroundImage = `url('${imagens[imagemIndex]}')`;
+            }
+
+            setInterval(mudarImagemFundo, 5000);
+            document.body.style.backgroundImage = `url('${imagens[imagemIndex]}')`;
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
